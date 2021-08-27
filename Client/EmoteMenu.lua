@@ -18,6 +18,11 @@ AddEventHandler('QBCore:Client:OnPlayerUnload', function()
     isLoggedIn = false
 end)
 
+RegisterNetEvent('QBCore:Player:SetPlayerData')
+AddEventHandler('QBCore:Player:SetPlayerData', function(val)
+    PlayerData = val
+end)
+
 if Config.MenuPosition then
   if Config.MenuPosition == "left" then
     menuPosition = leftPosition
@@ -59,7 +64,7 @@ local FavoriteEmote = ""
 
 Citizen.CreateThread(function()
   while true do
-    if Config.FavKeybindEnabled and not PlayerData.metadata['isdead'] then
+    if Config.FavKeybindEnabled and not PlayerData.metadata['inlaststand'] and not PlayerData.metadata['isdead'] then
       if IsControlPressed(0, Config.FavKeybind) then
         if not IsPedSittingInAnyVehicle(PlayerPedId()) then
           if FavoriteEmote ~= "" then
